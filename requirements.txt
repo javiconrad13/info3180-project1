@@ -1,0 +1,13 @@
+Flask==0.12
+Jinja2==2.9.4
+MarkupSafe==0.23
+Werkzeug==0.11.15
+click==6.7
+itsdangerous==0.24
+wsgiref==0.1.2
+psycopg2
+Flask-SQLAlchemy
+Flask-Migrate
+gunicorn==19.6.0
+Flask-WTF==0.14.2
+WTForms==2.1
