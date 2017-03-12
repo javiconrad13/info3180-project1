@@ -48,16 +48,19 @@
     <a href="/profile/{{ profile.userid}}" method="POST">
     <div class="btn btn-default profile_btn">
         <div class="pic">
-            <img class='display_pic' src={{ url_for('static', filename="uploads/"+profile.pro_pic ) }}>
-        <div class="name" >
+        {% if profile.pro_pic %}
+            <img class='display_pic' src="{{url_for('static', filename="uploads/"+profile.pro_pic ) }}">
+        {% else %}
+            <img class='display_pic' src="{{ url_for('static',filename="images/empty.jpg") }}">
+        {% endif %}
+        <div class="name">
             <p><b>Username:</b> {{ profile.username }}</p>
             <p><b>UserID:  </b> {{ profile.userid }}</p>
+        </div>
         </div>
     </div>
     </a>
     </div>
     {% endfor %}
-
-
 
 {% endblock %}

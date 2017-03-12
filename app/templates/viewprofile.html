@@ -1,25 +1,60 @@
 {% extends "base.html" %}
 
-
-{% block js %}
-{% endblock %}
-
-
 {% block main %}
-
-    <div class='container'>
-        <strong>Userid:</strong> {{ profile.userid }}
-        <strong>Username:</strong> {{ profile.username }}
-        <strong>image:</strong> {{ profile.pro_pic }}
-        <strong>Gender:</strong> {{ profile.gender }}
-        <strong>Age:</strong> {{ profile.age }}
-        <strong>profile_created_on:</strong> {{ profile.date_created }}        
-    </div>
+<style>
+    img{
+        display:inline; 
+        float:left; 
+        border:5px solid lightgrey; 
+        border-radius:5px; 
+        width:200px;
+        height:200px;  
+        padding: 5px ;
+        transform: translate(0px,10px);
+    }
     
-    <div>
-        <form action="{{ url_for('viewprofile',userid=profile.userid) }}" method="POST" enctype="application/json">
-            <button type="submit">View JSON</button>
-        </form>
-    </div>
+    table{
+        border-collapse: separate; 
+        border:5px solid lightgray; 
+        border-radius:5px; 
+        float:left; 
+        width:65%; 
+        min-height:250px;
+        transform: translate(1px,10px);
+    }
+</style>
 
+
+    <h1>Profile</h1>
+    <form action="{{ url_for('viewprofile',userid=profile.userid) }}" method="POST" enctype="application/json">
+        <button type="submit" style="position:relative;">View JSON</button>
+    </form>
+    <hr>
+    {% if profile.pro_pic %}
+        <img src="{{ url_for('static', filename="uploads/"+profile.pro_pic ) }}">
+    {% else %}
+        <img src="{{ url_for('static',filename="images/empty.jpg") }}">
+    {% endif %} 
+    <table>
+        <tr>
+            <th style="background-color: lightgray;padding-left:20px;"><h2>{{ profile.firstname }} {{ profile.lastname }}</br><font size="3">Profile Created On: {{ profile.date_created }}</font></h2></th>
+        </tr>
+        <tr>
+            <td style="padding-left:30px;">
+                </br>
+                <b>Username:</b> {{ profile.username }}
+                </br>
+                <b>Id Number:</b> {{ profile.userid }}
+                </br>
+                <b>Gender:</b> {{ profile.gender }}
+                </br>
+                <b>Age:</b> {{ profile.age }}
+                </br><hr>
+                {{ profile.bio }}
+                </br>
+                </br>
+            </td>
+        </tr>
+
+    </table>
 {% endblock %}

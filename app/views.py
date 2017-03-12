@@ -39,9 +39,10 @@ def profile():
         gender = request.form['gender']
         #Picture handler
         pro_pic = request.files['pro_pic']
-        file_folder = app.config['UPLOAD_FOLDER']
-        filename = secure_filename(pro_pic.filename)
-        pro_pic.save(os.path.join(file_folder, filename))
+        if pro_pic:
+            file_folder = app.config['UPLOAD_FOLDER']
+            filename = secure_filename(pro_pic.filename)
+            pro_pic.save(os.path.join(file_folder, filename))
         ###
         date_created = time.strftime('%m %d %Y')
         
@@ -65,7 +66,6 @@ def listprofiles():
     elif request.method == 'GET':
         return render_template('listprofile.html',profiles=profiles)
 
-
 @app.route("/profile/<userid>", methods=['POST','GET'])
 def viewprofile(userid):
     print userid
@@ -75,7 +75,6 @@ def viewprofile(userid):
         return jsonify(userid=profile.userid, username=profile.username, profile_image=profile.pro_pic, gender=profile.gender, age=profile.age, profile_created_on=profile.date_created)
     else:
         return render_template('viewprofile.html', profile=profile)
-
 
 ###
 # The functions below should be applicable to all Flask apps.
