@@ -1,1 +1,63 @@
 {% extends "base.html" %}
+
+{% block main %}
+<style>
+    #container{
+        width: 100%;
+        margin: 0 auto;
+        color:black;
+    }
+    
+    .display_pic{
+        height: 90px;
+    }
+    
+    .profile_btn{
+        background: #FFFFFF;
+        border: none;
+        width: 100%;
+        margin: 5px;
+        min-height: 50px;
+    }
+    
+    .name{
+        font-size: 15px;
+        float: right;
+        margin-left: 20px;
+        color:black;
+    }
+    
+    .pic{
+        height: 90%;
+        float: left;
+    }
+    
+</style>
+
+
+    <h2 style="text-align:left;">Profiles</h2>
+    <p>Select the profile you want to view</p>
+    <div>
+        <form action="{{ url_for('listprofiles') }}" method="POST" enctype="application/json">
+            <button type="submit">View JSON</button>
+        </form>
+    </div>
+    
+    {% for profile in profiles %}
+    <div id="container">
+    <a href="/profile/{{ profile.userid}}" method="POST">
+    <div class="btn btn-default profile_btn">
+        <div class="pic">
+            <img class='display_pic' src={{ url_for('static', filename="uploads/"+profile.pro_pic ) }}>
+        <div class="name" >
+            <p><b>Username:</b> {{ profile.username }}</p>
+            <p><b>UserID:  </b> {{ profile.userid }}</p>
+        </div>
+    </div>
+    </a>
+    </div>
+    {% endfor %}
+
+
+
+{% endblock %}

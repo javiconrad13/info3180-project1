@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block js %}
+{% endblock %}
+
+
+{% block main %}
+
+    <div class='container'>
+        <strong>Userid:</strong> {{ profile.userid }}
+        <strong>Username:</strong> {{ profile.username }}
+        <strong>image:</strong> {{ profile.pro_pic }}
+        <strong>Gender:</strong> {{ profile.gender }}
+        <strong>Age:</strong> {{ profile.age }}
+        <strong>profile_created_on:</strong> {{ profile.date_created }}        
+    </div>
+    
+    <div>
+        <form action="{{ url_for('viewprofile',userid=profile.userid) }}" method="POST" enctype="application/json">
+            <button type="submit">View JSON</button>
+        </form>
+    </div>
+
+{% endblock %}

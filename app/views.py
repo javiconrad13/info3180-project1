@@ -55,12 +55,27 @@ def profile():
 
 @app.route("/profiles", methods=['POST','GET'])
 def listprofiles():
-    return render_template('listprofile.html')
+    profiles = db.session.query(user_profile).all()
+    if request.headers['Content-Type']=='application/json' or request.method == "POST":
+        userlist = []
+        for profile in profiles:
+            userlist.append({'userid':profile.userid, 'username':profile.username})
+            profiles = {'Users':userlist}
+        return jsonify(profiles)
+    elif request.method == 'GET':
+        return render_template('listprofile.html',profiles=profiles)
 
 
-#@app.route("/profile/<userid>", methods=['POST','GET'])
-#def viewprofile():
-#    return render_template('viewprofile.html')
+@app.route("/profile/<userid>", methods=['POST','GET'])
+def viewprofile(userid):
+    print userid
+    profile = db.session.query(user_profile).filter_by(userid=userid).first()
+
+    if request.headers['Content-Type']=='application/json' or request.method == "POST":
+        return jsonify(userid=profile.userid, username=profile.username, profile_image=profile.pro_pic, gender=profile.gender, age=profile.age, profile_created_on=profile.date_created)
+    else:
+        return render_template('viewprofile.html', profile=profile)
+
 
 ###
 # The functions below should be applicable to all Flask apps.
